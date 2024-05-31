@@ -81,8 +81,27 @@ GROUP BY DEPT_CODE;
 
 /*
 사용하려면 추후 GROUP BY를 사용해야함
+ORA-00937: not a single-group group function
+00937. 00000 -  "not a single-group group function"
+*Cause:    
+*Action:
 
 */
 --3. D5부서의 평균 급여 조회
 --> AS D5 부서 평균 급여
 SELECT AVG(SALARY) AS "D5 부서 평균 급여" FROM EMPLOYEE WHERE DEPT_CODE ='D5';
+
+/********REPLACE 활용 실습***********/
+
+--1. 이메일 주소에서 모든 점(.)DMF 하이픈(-)EOCP
+--> EMP_ID,EMAIL,AS 수정된 이메일
+SELECT EMP_ID,EMAIL,REPLACE(EMAIL,'.','-')AS "수정된 이메일" FROM EMPLOYEE;
+--2. 주민번호에서 모든 하이픈(-)을 빈 문자열''로 대체
+--> EMP_NAME,EMP_NO,AS 수정된주민번호
+SELECT EMP_NAME,EMP_NO,REPLACE(EMP_NO,'-','')AS "수정된 주민번호" FROM EMPLOYEE;
+--3. 이름에서 '김'을 KIM으로 대체
+--> EMP_NAME,AS 수정된이름
+SELECT EMP_NAME,REPLACE(EMP_NAME,'김','KIM') AS "수정된 이름" FROM EMPLOYEE;
+--4. 직무코드에서 J를 JOB으로 대체
+-->EMP_ID,JOB_CODE,수정된 직무코드
+SELECT EMP_ID,JOB_CODE,REPLACE(JOB_CODE,'J','JOB') AS "수정된 직무코드" FROM EMPLOYEE;
