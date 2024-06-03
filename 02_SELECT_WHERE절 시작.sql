@@ -124,3 +124,66 @@ SELECT EMP_NAME,HIRE_DATE AS "입사일" FROM employee WHERE HIRE_DATE BETWEEN T
 
 --입사일이 2000년 이후 입사한 사원의 이름과 입사일 조회
 SELECT EMP_NAME,HIRE_DATE FROM employee WHERE HIRE_DATE > TO_DATE('2000-01-01','YYYY-MM-DD');
+
+--특정 전화번호 패턴을 가지 ㄴ사원의 이름과 전화번호 조회
+SELECT emp_name,phone from employee where phone like '010%';
+
+--이메일의 아이디 의 글자 수가 5글자인 사원의 이름 이메일 조회 5글자@ EMPLOYEE
+SELECT EMP_ID,EMP_NAME,EMAIL FROM employee where email like '_____@%';
+--이메일의 아이디 중 _앞쪽의 글자수가 3글자인 사원의 사번 이르 ㅁ이메일 조회 EMPLOYEE
+SELECT EMP_ID,EMP_NAME,EMAIL FROM employee WHERE EMAIL LIKE '___%';
+
+--ESCAPE 옵션 : LIKE 의미르 ㄹ벗어나 단순 문자여롤 인식
+-->적용범위:특수문자 뒤 한 글자
+SELECT EMP_ID,EMP_NAME,EMAIL FROM employee WHERE EMAIL LIKE '___#_%' ESCAPE '#';
+
+/*
+___ 세글자 의미
+
+ESCAPE '#' : 구분을 지을 것이다
+___LIKE사용하는 3글자만 찾으라는 의미로 구분짓는것
+_% -> _로된 글자 찾기
+
+__#_% __@%
+_를 @ 처럼 사용하길 원했기 때문에 중간 # 넣어준것
+
+__#_% __돈%
+_를 돈 처럼 사용하길 원했기 때문에 중간 # 넣어준것
+*/
+
+-- EMPLOYEE 테이블
+-- 1. EMP_NAME을 "이름",SALARY를 "급여"로 표시하여 선택
+SELECT EMP_NAME AS"이름",SALARY AS"급여" FROM EMPLOYEE; 
+-- 2. DEPT_CONE를 "부서코드"로, JOB_CODE를 "직무코드"로 표시하여 선택
+SELECT DEPT_CODE AS"부서코드",JOB_CODE AS"직무코드" FROM EMPLOYEE; 
+-- 3. EMAIL을 "이메일", PHONE을 "전화번호"로 표시하여 선택
+SELECT EMAIL AS"이메일",PHONE AS"전화번호" FROM EMPLOYEE; 
+-- 4. EMP_ID를 "사원ID", HIRE_DATE를 "입사일"로 표시하여 선택
+SELECT EMP_ID AS"사원ID",HIRE_DATE AS "입사일" FROM EMPLOYEE; 
+-- 5. EMP_NAME,DEPT_CODE, SALARY를 각각 "이름","부서","급여"로 표시하여 선택
+SELECT EMP_NAME AS"이름",DEPT_CODE AS "부서",SALARY AS"급여" FROM EMPLOYEE; 
+-- 6. 중복되지 않은 DEPT_CODE를 선택
+SELECT DISTINCT DEPT_CODE FROM employee;
+-- 7. 중복되지 않은 JOB_CODE를 선택
+SELECT DISTINCT JOB_CODE FROM employee;
+-- 8. 중복되지 않은 SAL_LEVEL를 선택
+SELECT DISTINCT SAL_LEVEL FROM employee;
+-- 9. 중복되지 않은 MANAGER_ID를 선택
+SELECT DISTINCT MANAGER_ID FROM employee;
+-- 10. 중복되지 않은 EMP_NAME를 선택
+SELECT DISTINCT EMP_NAME FROM employee;
+
+
+-- OR
+
+--DEPT_CODE가 D5이거나 SALARY가 2000000보다 큰 사원의 이름과 급여 선택
+SELECT EMP_NAME,SALARY FROM EMPLOYEE WHERE DEPT_CODE = 'D5' OR SALARY > 2000000;
+
+--DEPT_CODE가 D6이거나 JOB_CODE가 J3인 사원의 이름과 급여를 선택
+SELECT EMP_NAME,DEPT_CODE,JOB_CODE FROM EMPLOYEE WHERE DEPT_CODE = 'D6' OR JOB_CODE = 'J3';
+--SAL_LEVEL이 S5이거나 BONUS가 0.2인 사원의 이름과 급여수준 선택
+SELECT EMP_NAME,SAL_LEVEL,BONUS FROM EMPLOYEE WHERE SAL_LEVEL = 'S5' OR BONUS=0.2;
+--ENT_YN 가 N이거나 HIRE_DATE가 2000년 이후인 사원의 이름과 입사일 선택
+SELECT EMP_NAME, ENT_YN,HIRE_DATE FROM EMPLOYEE WHERE ENT_YN = 'N' OR HIRE_DATE > TO_DATE('2000-01-01','YYYY-MM-DD');
+
+

@@ -105,3 +105,15 @@ SELECT EMP_NAME,REPLACE(EMP_NAME,'김','KIM') AS "수정된 이름" FROM EMPLOYE
 --4. 직무코드에서 J를 JOB으로 대체
 -->EMP_ID,JOB_CODE,수정된 직무코드
 SELECT EMP_ID,JOB_CODE,REPLACE(JOB_CODE,'J','JOB') AS "수정된 직무코드" FROM EMPLOYEE;
+
+--TO _NUMBER
+/*
+Oracle sql 존재
+문자열을 숫자 데이터 형식으로 변환하는 데 사용
+추후에 JAVA INT 값이 아니라 String 값으로 값이 넘어오고
+추후 변환이 필요할 때는 TO_NUMBER 사용할 일이 있을 수 있음
+*/
+--DUAL 가상 테이블을 이용해서
+-- 단순히 문자열을 숫자로 변환하는 코드
+SELECT TO_NUMBER("12345")
+FROM DUAL;
