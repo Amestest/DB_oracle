@@ -157,7 +157,7 @@ ORDER BY 가나다순 정렬
 ---> 그룹화 전에 필터링 일어남
 SELECT DEPT_CODE, AVG(SALARY)
 FROM EMPLOYEE
-WHERE SALARY >= 30000000
+WHERE SALARY >= 3000000
 GROUP BY DEPT_CODE
 ORDER BY DEPT_CODE;
 
@@ -167,13 +167,16 @@ ORDER BY DEPT_CODE;
 ----> 모든 급여를 고려해서 평균을 계산한 다음 조건에 맞는 결과만 필터링
 SELECT DEPT_CODE,AVG(SALARY)
 FROM EMPLOYEE
---WHERE SALARY >= 30000000;
+--WHERE SALARY >= 3000000;
 GROUP BY DEPT_CODE
 HAVING AVG(SALARY) >= 3000000
 ORDER BY DEPT_CODE;
 
 /*
-
+D1	3660000
+D5	3630000
+D6	3650000
+D9	5900000
 
 D6	3366666.66666666666666666666666666666667
 D9	5900000
@@ -216,19 +219,23 @@ D2	총합	6520000 <-- D2부서의 전체 급여 합계(소계)
 D5	J3	3500000 <-- D5부서의 J3직급 급여 합계
 D5	J5	8460000 <-- D5부서의 J5직급 급여 합계
 D5	J7	3800000 <-- D5부서의 J7직급 급여 합계
-D5	총합	15760000 <-- D5부서의 전체의 급여 합계(소계)
+D5	총합	15760000 <-- D5부서의 전체(J3,J5,J7)의 급여 합계(소계)
 D6	J3	7300000 <-- D6부서의 J3직급 급여 합계
 D6	J4	2800000 <-- D6부서의 J4직급 급여 합계
-D6	총합	10100000 <-- D6부서의 전체의 급여 합계(소계)
+D6	총합	10100000 <-- D6부서의 전체(J3,J4)의 급여 합계(소계)
 D8	J6	6986240 <-- D8부서의 J6직급 급여 합계
-D8	총합	6986240 <-- D8부서의 전체의 급여 합계(소계)
-D9	J1	8000000 <-- D부서의 J1직급 급여 합계
-D9	J2	9700000 <-- D9부서의 J2직급 급여 합계
-D9	전체	17700000 <-- D9부서의 전체 급여 합계(소계)
-null	J6	2320000
-null	J7	2890000
-		5210000
-		70096240
+D8	총합	6986240 <-- D8부서의 전체(J6)의 급여 합계(소계)
+
+카페의민족
+
+빠나쁘레소 아메리카노 총매출
+            카페라떼 총매출
+            아메리카노 + 카페라떼 총 매출
+            
+멕아커피    아메리카노 총매출
+            카페라떼 총매출
+            아메리카노 + 카페라떼 총 매출
+            
         */
 
 -- CUBE 함수 : 그룹별 산출한 결과를 집계하는 함수
@@ -279,6 +286,52 @@ null	null	70096240 <-- 전체 데이터의 급여 합계(총계)
 
 /****** 
 집합 연산 (SET OPERATION)
+여러 개의 SELECT 결과물을 하나의 쿼리로 만드는 연산자
+여러가지 조건이 있을 때 그에 해당하는 여러개의 결과값을 결합시키고 싶을 때 사용
+--장점:초보자들이 사용하기 좋음(조건을 덜 생각해도 됨)
+--주의할점 : 집합 연산에 사용되는 SELECT문ㅇ느 SELECT절이 동일해야함
+
+--UNION은 OR 같은 개념 --> 중복 제거
+--INTERSECT AND 같은 개념
+--MINUS는 차집합 같은 개념
+--UNION ALL 은 OR 결과 값에 AND결과 값이 더해진 값 --> 중복이 제거되지 않은 채로 합쳐짐
+********/
+
+---- UNION : 여러개의 쿼리 결과를 하나로 합치는 연산자 ----
+--중복된 영역을 제외하여 하나로 합침
+
+--부서코드가 'D5'또는'D6'인 사원 이름, 부서코드 조회
+
+--1)부서코드가 'D5'로 조회
+SELECT EMP_NAME,DEPT_CODE
+FROM EMPLOYEE
+WHERE DEPT_CODE = 'D5'
+
+UNION
+--2)부서코드가 'D5'조회
+SELECT EMP_NAME,DEPT_CODE
+FROM EMPLOYEE
+WHERE DEPT_CODE = 'D6'
+
+--UNION ALL : 여러개의 쿼리 결과를 하나로 합치는 연산자
+--UNION과 차이점은 중복영역을 모두 포함
+
+--부서코드가 'D5'이거나 급여가 300만 초과하는 사원의
+--이름 부서코드 급여 조회(중복 포함)
+
+--1)부서코드가 'D5'
+SELECT EMP_NAME,DEPT_CODE,SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE='D5'
+
+UNION ALL
+
+--2)급여가 300만 초과
+SELECT EMP_NAME,DEPT_CODE,SALARY
+FROM EMPLOYEE
+WHERE SALARY > 3000000;
+
+
 --INTERSECT:여러개의 SELECT 한 결과에서 공통 부분만 결과로 추출
 
 --부서코드가 'D5'이면서 급여가 300만 초과하는 사원의
@@ -315,47 +368,3 @@ WHERE SALARY > 3000000;
 
 -->MINUS사용하지 않아도 GROUP BY WHERE 조건으로 구분지을 수 있음
 
-여러 개의 SELECT 결과물을 하나의 쿼리로 만드는 연산자
-여러가지 조건이 있을 때 그에 해당하는 여러개의 결과값을 결합시키고 싶을 때 사용
---장점:초보자들이 사용하기 좋음(조건을 덜 생각해도 됨)
---주의할점 : 집합 연산에 사용되는 SELECT문ㅇ느 SELECT절이 동일해야함
-
---UNION은 OR 같은 개념 --> 중복 제거
---INTERSECT AND 같은 개념
---MINUS는 차집합 같은 개념
---UNION ALL 은 OR 결과 값에 AND결과 값이 더해진 값 --> 중복이 제거되지 않은 채로 합쳐짐
-********/
-
----- UNION : 여러개의 쿼리 결과를 하나로 합치는 연산자 ----
---중복된 영역을 제외하여 하나로 합침
-
---부서코드가 'D5'또는'D6'인 사원 이름, 부서코드 조회
-
---1)부서코드가 'D5'로 조회
-SELECT EMP_NAME,DEPT_CODE
-FROM EMPLOYEE
-WHERE DEPT_CODE = 'D5'
-
-UNION
---2)부서코드가 'D5'조회
-SELECT EMP_NAME,DEPT_CODE
-FROM EMPLOYEE
-WHERE DEPT_CODE = 'D6'
-
---UNION ALL : 여러개의 쿼리 결과를 하나로 합치는 연산자
---UNION과 차이점은 중복영역을 모두 포함
-
---부서코드가 'D5'이거나 급여가 300만 초과하는 사원의
---이리ㅡㅁ 부서코드 급여 조회(중복 포함)
-
---1)부서코드가 'D5'
-SELECT EMP_NAME,DEPT_CODE,SALARY
-FROM EMPLOYEE
-WHERE DEPT_CODE='D5'
-
-UNION ALL
-
---2)급여가 300만 초과
-SELECT EMP_NAME,DEPT_CODE,SALARY
-FROM EMPLOYEE
-WHERE SALARY > 3000000;

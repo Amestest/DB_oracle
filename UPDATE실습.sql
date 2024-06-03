@@ -44,9 +44,9 @@ UPDATE EMPLOYEE2 SET HIRE_DATE='2023', ENT_YN='N';
 --17. 보너스율이 0.15인 모든 직원의 보너스율을 0.25로, 급여를 4000000으로 변경
 
 --18. 부서 코드 'D8'과 직무 코드 'J2'를 가진 모든 직원의 급여를 4500000으로, 전화번호를 '01022223333'으로 변경
-
+UPDATE EMPLOYEE2 SET SALARY=4500000,PHONE='01022223333' WHERE DEPT_CODE='D8' AND JOB_CODE='J2';
 --19. 모든 직원의 이메일 도메인을 'example.com'으로, 부서 코드를 'D10'으로 변경
-
+UPDATE EMPLOYEE2 SET EMAIL = REPALCE(EMAIL,'or.kr','example.com'), DEPT_CODE ='D10'
 --20. 이름이 '박민수'인 직원의 이름을 '박준수'로, 급여를 3500000으로 변경
 
 --21. 부서 코드 'D3'에 속한 모든 직원의 급여를 3800000으로, 보너스율을 0.2로 수정
