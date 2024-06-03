@@ -76,3 +76,51 @@ UPDATE department2 SET DEPT_TITLE = '인사팀';
 SELECT*FROM department2;
 
 ROLLBACK;
+
+
+-- UPDATE 한 번에 여러컬럼 업데이트
+
+--진행하기전 EMPOLYEE3 만들기 CREATE TABLE EPLOYEE 복사
+CREATE TABLE EMPLOYEE3 AS SELECT*FROM EMPLOYEE;
+
+-- EMP_ID가 200인 직원의 이메일과 전화번호 업데이트
+UPDATE EMPLOYEE3 SET EMAIL='ONE_SUN@or.kr', PHONE = '01012345678' WHERE EMP_ID = '200';
+
+SELECT EMP_ID,EMAIL,PHONE FROM EMPLOYEE3 WHERE EMP_ID='200';
+
+ROLLBACK;
+
+--D9 부서의 모든 직원의 급여*1.1 보너스=0.2 변경
+UPDATE EMPLOYEE3 SET SALARY=SALARY*1.1,BONUS=0.2 WHERE DEPT_CODE ='D9';
+--J3 직무 코드를 가진 지구언의 직무코드와 부서코드 변경
+--J5 D5
+UPDATE employee3 SET JOB_CODE='J5',DEPT_CODE='D5' WHERE JOB_CODE='J3';
+--송은희 직원의 이름과 이메일 변경
+--송은휘 SONGSONG@or.kr
+UPDATE EMPLOYEE3 SET EMP_NAME = '송은휘',EMAIL='SONGSONG@or.kr' WHERE EMP_NAME = '송은희';
+
+ROLLBACK;
+
+--차태연 직원의 이름과 급여변경
+--> 차태형 8000000
+UPDATE employee3 SET emp_name ='차태형',SALARY=8000000 WHERE emp_name ='차태연';
+SELECT * FROM employee3;
+-->EMPLOYEE3에 해당하는 모든 직원의 이메일 도메인과 부서코드 D4 변경
+UPDATE employee3 SET email = REPLACE(email,'or.kr','kh.kh'),DEPT_CODE='D4';
+SELECT * FROM EMPLOYEE3;
+
+ROLLBACK;
+
+--EMPLOYEE3 전체 테이블 삭제
+DELETE FROM EMPLOYEE3;
+
+--완전삭제 --> COMMIT;
+
+--되돌리기 --> ROLLBACK;
+COMMIT;
+
+SELECT * FROM EMPLOYEE2;
+
+DROP TABLE EMPLOYEE3;
+
+COMMIT;

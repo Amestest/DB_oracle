@@ -94,3 +94,29 @@ UPDATE department2 SET DEPT_ID = 'D0',DEPT_TITLE = '회계관리팀' WHERE DEPT_
 SELECT*FROM department2;
 
 ROLLBACK;
+
+/********
+삭제하기
+테이블 안에 존재하는 값들을 삭제하는 구문
+
+[작성법]
+DELETE FROM 테이블명 WHERE 조건설정;
+만약 WHERE 조건을 설정하지 않으면 모든 행이 다 삭제됨
+
+DELETE FROM 테이블명;
+->테이블 안에 있는 내용을 모두 삭제
+
+DELETE FROM 테이블명 WHERE 컬럼명 = 삭제할컬럼값;
+--> 테이블 안에서 특정한 컬럼값에 대당하는 줄을 모두 삭제
+
+--완전삭제 --> COMMIT;
+
+--되돌리기 --> ROLLBACK;
+
+주의할점;
+DELETE는 테이블 안에 잇느 ㄴ내용을 삭제
+DROP은 테이블 자체를 삭제
+DROP TABLE EMPLOYEE3;
+
+COMMIT;
+*******/
