@@ -21,7 +21,7 @@ AND ABSENCE_YN = 'Y'
 AND DEPARTMENT_NO = '001';
 
 
---3.5
+--4번
 -- 도서관에서 대출 도서 장기 연체자들을 찾아 이름 계시하고자하낟
 ------ 그 대상자들의 학번이 다음과 같을 때 대상자를 찾는 적절한 SQL 쿼리 구문
 --A513079, A513090 A513091 A513110 A513119
@@ -35,12 +35,12 @@ ORDER BY STUDENT_NAME DESC;
 
 
 
---4. 입학 정원이 20명이상 30명 이하인 학과들의 학과 이름과 계열 조회
+--5. 입학 정원이 20명이상 30명 이하인 학과들의 학과 이름과 계열 조회
 SELECT DEPARTMENT_NAME, CATEGORY
 FROM tb_department
 WHERE CAPACITY BETWEEN 20 AND 30;
 
---5.
+--6.
 -- 춘 기술대학교는 총장을 제외하고 모든 교수들이 소속학과를 가지고 있음
 -- 춘 기술대학교 총장의 이름을 알아 낼 수 있는 SQL 문장 작성 총장은 NULL
 SELECT * FROM TB_PROFESSOR;
