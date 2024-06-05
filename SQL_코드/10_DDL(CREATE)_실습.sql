@@ -16,13 +16,16 @@ COMMENT ON COLUMN "CUSTOMER".CUSTOMER_EMAIL IS '고객이메일';--주석작성
 COMMENT ON COLUMN "CUSTOMER".CUSTOMER_PHONE IS '고객핸드폰주소';--주석작성
 COMMENT ON COLUMN "CUSTOMER".CUSTOMER_ADDRESS IS '고객주소';--주석작성
 /*
-오류 보고 -
 ORA-01780: string literal required
 01780. 00000 -  "string literal required"
---> 큰 따옴표 문제
+-> 큰 따옴표 문제
 
---> 테이블이름에 큰 따옴표를 넣어도 문제 가 없지만
+오류 보고 -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
 
+->테이블이름에 큰 따옴표를 넣어도 문제가 없지만
+큰 따옴표 같은 경우 대소문자를 구분하는 명칭이 적혀있기 때문에 에러가 발생할 수 있음
 */
 
 COMMIT;
@@ -116,6 +119,21 @@ ON DELETE CASCADE -- 부모 삭제시 자식까지 삭제해줘
 );
 --->ABCDEF FOREIGN KEY 키를 참조할 변수명
 -----> 참조할 변수명 FK_COMPANY3 규칙명 작성해주는데 규칙명은 모든 테이블 합쳐서 동일한 이름을 쓸 수 없음
+
+--테이블 생성 DRINK_COMPANY (
+    -- DRINK_ID NUMBER 10, 0   기본키
+    -- DRINK_NAME   VARCHER2(100) NOT NULL
+    -- DRINK_ADDRESS VARCHER2 (255)
+    -- DRINK_PHONE VARCHER2(20)
+    
+
+-- 테이블 생성 SOFTS (
+    SOFTS_ID NUMBER(10,0) 기본키
+    SOFTS_NAME VARCHAR2(100) 널 불가
+    PRICE   NUMBER 10,2   NULL 불가
+    
+    COMPANY_ID NUMBER (10,0) --회사 ID
+    부모삭제시 자식 삭제하는 FOREIGN KEY 생성  외래키 이름 : DK_COMPANY
 
 
 --DRINK_COMPANY
