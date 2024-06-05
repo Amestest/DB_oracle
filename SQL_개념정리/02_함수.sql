@@ -107,13 +107,27 @@ SELECT COUNT(PHONE) FROM EMPLOYEE;
 -- 모든 사원의 평균 급여 조회
 SELECT AVG(SALARY) FROM EMPLOYEE;
 
---1.CEIL 올림
+--CEIL 올림
 SELECT CEIL (AVG(SALARY)) FROM EMPLOYEE;
---2.FLOOR 내림
+--FLOOR 내림
 SELECT FLOOR(AVG(SALARY)) FROM EMPLOYEE;
---3.ROUND 반올림
+--ROUND 반올림
 SELECT ROUND(AVG(SALARY)) FROM EMPLOYEE;
+-- TRUNC 버림
+SELECT TRUNC(AVG(SALARY))FROM EMPLOYEE;
 
+--FLOOR 와 TRUNC 차이
+---1) FLOOR: 주어진 숫자보다 작거나 가장 큰 정수를 반환
+-----소수 부분은 무조건 버림
+SELECT FLOOR(5.7) FROM DUAL;  -- 결과:5
+SELECT FLOOR(-5.7) FROM DUAL;  -- 결과:-6
+SELECT FLOOR(5.789,1) FROM DUAL; --에러발생 소수 표현 X
+---2) TRUNC:숫자의 소수점을 잘라내는 역할
+-----자르고자 하는 자릿수를 지정 지정하지 않으면 기본값 0
+SELECT TRUNC(5.7) FROM DUAL;  -- 결과:5
+SELECT TRUNC(-5.7) FROM DUAL;  -- 결과:-5
+SELECT TRUNC(5.789,1) FROM DUAL; --결과:5.7
+SELECT TRUNC(5.789,2) FROM DUAL; --결과:5.78
 /*
 *******TRIM ******
 공백 관련 함수
