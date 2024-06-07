@@ -347,3 +347,44 @@ CREATE TABLE 자식테이블(
 */
 -----------------------------------------
 -----------------------------------------
+
+-- 5.CHECK 제약조건 : 컬럼에 기록되는 값에 조건을 설정할 수 있음
+-- CHECK (컬럼명 비교연산자 비교값)
+-- 비교값은 변하는 값이나 함수 사용 불가
+
+CREATE TABLE USER_CHECK (
+USER_NO NUMBER PRIMARY KEY,
+USER_ID VARCHAR2(20) UNIQUE,
+USER_PW VARCHAR2(30) NOT NULL,
+USER_NAME VARCHAR2(30),
+
+GENDER VARCHAR2(10) CHECK(GENDER IN('남','여'))
+
+);
+-- 앞으로 GENDER 컬럼에는 남 이나 여 라는 글자만 들어갈 수 있음
+
+INSERT INTO user_check VALUES (1,'user01','pw01','홍길동','남');
+
+INSERT INTO user_check VALUES (2,'user02','pw02','박철수','남자');
+/*
+ORA-02290: check constraint (KH_T.SYS_C007124) violated
+제약조건으로 남이나 여만 가능하게 했는데 남자랄느 ㄴ조건이 들어와 에러발생
+*/
+
+INSERT INTO user_check VALUES (2,'user02','pw02','박철수','여');
+
+INSERT INTO user_check VALUES (3,'user03','pw03','강영희','려');
+
+-- check 사용방법
+
+--1번 방법 따로 index에 기록하지 않고 조건 설정만 할 경우
+컬럼명 자료형 CHECK(컬럼명 IN('조건1','조건2'))
+
+--2번 방법 따로 index에 기록한다음 조건 설정 한 경우(한 줄 작성)
+컬럼명 자료형 CONSTRAINT 인덱스에기록할이름 CHECK(컬럼명 IN ('조건1','조건2'))
+
+--3번 방법 따로 index에 기록한 다음 조건 설정한 경우 (여러 줄 작성)
+컬럼명 자료형,
+
+CONSTRAINT 인덱스에기록할이름 CHECK(컬럼명 IN ('조건1','조건2'))
+
